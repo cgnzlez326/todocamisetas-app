@@ -1,0 +1,15 @@
+# TodoCamisetas - Front controller
+#
+# 1) Bloquea el acceso a .git y a archivos ocultos del proyecto.
+# 2) Sirve los archivos estaticos reales (swagger-ui/, docs/).
+# 3) Enruta el resto hacia index.php, conservando el query string.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteRule (^|/)\. - [F,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>

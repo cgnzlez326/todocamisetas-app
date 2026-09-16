@@ -1,0 +1,458 @@
+{
+  "info": {
+    "name": "TodoCamisetas API",
+    "description": "Coleccion de endpoints de la API RESTful de TodoCamisetas (B2B). Reglas de negocio: precio_final dinamico segun categoria del cliente, SKU unico, no eliminar clientes con camisetas asociadas, relacion camiseta-talla muchos a muchos.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost/todocamisetas",
+      "type": "string"
+    },
+    {
+      "key": "camiseta_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "cliente_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "talla_id",
+      "value": "2",
+      "type": "string"
+    },
+    {
+      "key": "sku",
+      "value": "CL-SEL-LOC-2025",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Salud",
+      "item": [
+        {
+          "name": "Estado del servicio",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/", "host": ["{{base_url}}"], "path": [""] },
+            "description": "GET /"
+          },
+          "response": []
+        },
+        {
+          "name": "Indice de recursos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api", "host": ["{{base_url}}"], "path": ["api"] },
+            "description": "GET /api"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Camisetas",
+      "item": [
+        {
+          "name": "Listar camisetas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/camisetas", "host": ["{{base_url}}"], "path": ["api", "camisetas"] },
+            "description": "GET /api/camisetas"
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"titulo\": \"Camiseta Local 2025 Seleccion Chilena\",\n      \"club\": \"Seleccion Chilena\",\n      \"pais\": \"Chile\",\n      \"tipo\": \"Local\",\n      \"color\": \"Rojo\",\n      \"precio\": 45000,\n      \"precio_oferta\": 39000,\n      \"detalles\": \"Tela Dry-Fit, corte regular.\",\n      \"sku\": \"CL-SEL-LOC-2025\",\n      \"tallas\": [{ \"id\": 2, \"nombre\": \"S\" }, { \"id\": 3, \"nombre\": \"M\" }]\n    }\n  ],\n  \"meta\": { \"total\": 1 }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Ver camiseta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/camisetas/{{camiseta_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "camisetas", "{{camiseta_id}}"]
+            },
+            "description": "GET /api/camisetas/{id}"
+          },
+          "response": [
+            {
+              "name": "404 No encontrada",
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "{\n  \"success\": false,\n  \"error\": { \"code\": 404, \"message\": \"Camiseta no encontrada.\" }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Ver camiseta por SKU",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/camisetas/sku/{{sku}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "camisetas", "sku", "{{sku}}"]
+            },
+            "description": "GET /api/camisetas/sku/{sku}"
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"titulo\": \"Camiseta Local 2025 Seleccion Chilena\",\n    \"sku\": \"CL-SEL-LOC-2025\",\n    \"precio\": 45000,\n    \"precio_oferta\": 39000,\n    \"tallas\": [{ \"id\": 2, \"nombre\": \"S\" }, { \"id\": 3, \"nombre\": \"M\" }]\n  }\n}"
+            },
+            {
+              "name": "404 No encontrada",
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "{\n  \"success\": false,\n  \"error\": { \"code\": 404, \"message\": \"Camiseta no encontrada.\" }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Crear camiseta",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Camiseta Local 2025 Colo-Colo\",\n  \"club\": \"Colo-Colo\",\n  \"pais\": \"Chile\",\n  \"tipo\": \"Local\",\n  \"color\": \"Blanco y Negro\",\n  \"precio\": 42000,\n  \"precio_oferta\": 37000,\n  \"detalles\": \"Edicion centenario.\",\n  \"sku\": \"CL-COL-LOC-2025\",\n  \"tallas\": [3, 4, 5]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{base_url}}/api/camisetas", "host": ["{{base_url}}"], "path": ["api", "camisetas"] },
+            "description": "POST /api/camisetas. Campos obligatorios: titulo, club, pais, tipo, color, precio, sku, tallas. SKU unico (409)."
+          },
+          "response": [
+            {
+              "name": "201 Creada",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "{\n  \"success\": true,\n  \"data\": { \"id\": 7, \"titulo\": \"Camiseta Local 2025 Colo-Colo\", \"sku\": \"CL-COL-LOC-2025\", \"tallas\": [{ \"id\": 3, \"nombre\": \"M\" }] },\n  \"message\": \"Camiseta creada correctamente.\"\n}"
+            },
+            {
+              "name": "400 Datos invalidos",
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "{\n  \"success\": false,\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Datos invalidos.\",\n    \"details\": { \"titulo\": \"El campo titulo es obligatorio.\" }\n  }\n}"
+            },
+            {
+              "name": "409 SKU duplicado",
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "{\n  \"success\": false,\n  \"error\": { \"code\": 409, \"message\": \"El SKU ya existe.\" }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Actualizar camiseta",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Camiseta Local 2025 Colo-Colo (edicion)\",\n  \"club\": \"Colo-Colo\",\n  \"pais\": \"Chile\",\n  \"tipo\": \"Local\",\n  \"color\": \"Blanco y Negro\",\n  \"precio\": 43000,\n  \"precio_oferta\": 38000,\n  \"detalles\": \"Temporada 2025.\",\n  \"sku\": \"CL-COL-LOC-2025\",\n  \"tallas\": [3, 4, 5, 6]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/camisetas/{{camiseta_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "camisetas", "{{camiseta_id}}"]
+            },
+            "description": "PUT /api/camisetas/{id}"
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar camiseta",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/camisetas/{{camiseta_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "camisetas", "{{camiseta_id}}"]
+            },
+            "description": "DELETE /api/camisetas/{id}. 409 si esta asociada a clientes."
+          },
+          "response": [
+            {
+              "name": "409 Asociada a clientes",
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "{\n  \"success\": false,\n  \"error\": { \"code\": 409, \"message\": \"No se puede eliminar una camiseta asociada a clientes.\" }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Clientes",
+      "item": [
+        {
+          "name": "Listar clientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/clientes", "host": ["{{base_url}}"], "path": ["api", "clientes"] },
+            "description": "GET /api/clientes"
+          },
+          "response": []
+        },
+        {
+          "name": "Ver cliente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/clientes/{{cliente_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "clientes", "{{cliente_id}}"]
+            },
+            "description": "GET /api/clientes/{id}"
+          },
+          "response": []
+        },
+        {
+          "name": "Crear cliente",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_comercial\": \"Tienda 90minutos\",\n  \"rut\": \"76.123.456-7\",\n  \"ciudad\": \"Santiago\",\n  \"region\": \"Metropolitana\",\n  \"categoria\": \"Preferencial\",\n  \"contacto_nombre\": \"Matias Lopez\",\n  \"contacto_email\": \"compras@90minutos.cl\",\n  \"porcentaje_oferta\": 10\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{base_url}}/api/clientes", "host": ["{{base_url}}"], "path": ["api", "clientes"] },
+            "description": "POST /api/clientes. categoria: Regular | Preferencial. RUT unico (409)."
+          },
+          "response": [
+            {
+              "name": "201 Creado",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "{\n  \"success\": true,\n  \"data\": { \"id\": 1, \"nombre_comercial\": \"Tienda 90minutos\", \"rut\": \"76.123.456-7\", \"categoria\": \"Preferencial\" },\n  \"message\": \"Cliente creado correctamente.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Actualizar cliente",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_comercial\": \"Tienda 90minutos\",\n  \"rut\": \"76.123.456-7\",\n  \"ciudad\": \"Santiago\",\n  \"region\": \"Metropolitana\",\n  \"categoria\": \"Preferencial\",\n  \"contacto_nombre\": \"Matias Lopez\",\n  \"contacto_email\": \"compras@90minutos.cl\",\n  \"porcentaje_oferta\": 12\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/clientes/{{cliente_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "clientes", "{{cliente_id}}"]
+            },
+            "description": "PUT /api/clientes/{id}"
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar cliente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/clientes/{{cliente_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "clientes", "{{cliente_id}}"]
+            },
+            "description": "DELETE /api/clientes/{id}. Rechaza con 409 si el cliente tiene camisetas asociadas."
+          },
+          "response": [
+            {
+              "name": "409 Tiene camisetas",
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "{\n  \"success\": false,\n  \"error\": { \"code\": 409, \"message\": \"No se puede eliminar un cliente que tiene camisetas asociadas.\" }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Asociar camiseta a cliente",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"camiseta_id\": 1,\n  \"cantidad\": 20\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/clientes/{{cliente_id}}/camisetas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "clientes", "{{cliente_id}}", "camisetas"]
+            },
+            "description": "POST /api/clientes/{id}/camisetas"
+          },
+          "response": []
+        },
+        {
+          "name": "Desasociar camiseta de cliente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/clientes/{{cliente_id}}/camisetas/{{camiseta_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "clientes", "{{cliente_id}}", "camisetas", "{{camiseta_id}}"]
+            },
+            "description": "DELETE /api/clientes/{id}/camisetas/{camisetaId}"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Precios",
+      "item": [
+        {
+          "name": "Camisetas del cliente con precio final",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/clientes/{{cliente_id}}/camisetas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "clientes", "{{cliente_id}}", "camisetas"]
+            },
+            "description": "GET /api/clientes/{id}/camisetas. Preferencial usa precio_oferta; Regular usa precio."
+          },
+          "response": [
+            {
+              "name": "200 Preferencial",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"sku\": \"CL-SEL-LOC-2025\",\n      \"precio\": 45000,\n      \"precio_oferta\": 39000,\n      \"cantidad\": 20,\n      \"precio_final\": 39000\n    }\n  ],\n  \"meta\": { \"total\": 1 }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Precio final puntual",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/clientes/{{cliente_id}}/camisetas/{{camiseta_id}}/precio",
+              "host": ["{{base_url}}"],
+              "path": ["api", "clientes", "{{cliente_id}}", "camisetas", "{{camiseta_id}}", "precio"]
+            },
+            "description": "GET /api/clientes/{id}/camisetas/{camisetaId}/precio"
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"cliente_id\": 1,\n    \"camiseta_id\": 1,\n    \"sku\": \"CL-SEL-LOC-2025\",\n    \"categoria\": \"Preferencial\",\n    \"precio\": 45000,\n    \"precio_oferta\": 39000,\n    \"precio_final\": 39000\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tallas",
+      "item": [
+        {
+          "name": "Listar tallas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/tallas", "host": ["{{base_url}}"], "path": ["api", "tallas"] },
+            "description": "GET /api/tallas"
+          },
+          "response": []
+        },
+        {
+          "name": "Ver talla",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tallas/{{talla_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tallas", "{{talla_id}}"]
+            },
+            "description": "GET /api/tallas/{id}"
+          },
+          "response": []
+        },
+        {
+          "name": "Crear talla",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"XXXL\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{base_url}}/api/tallas", "host": ["{{base_url}}"], "path": ["api", "tallas"] },
+            "description": "POST /api/tallas. Nombre unico (409)."
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar talla",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tallas/{{talla_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tallas", "{{talla_id}}"]
+            },
+            "description": "DELETE /api/tallas/{id}"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

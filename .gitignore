@@ -1,0 +1,7 @@
+# Sistema operativo / editor
+.DS_Store
+Thumbs.db
+*.log
+
+# Temporales
+/tmp/
