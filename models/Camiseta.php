@@ -13,7 +13,6 @@ declare(strict_types=1);
  *  - tipo:          string       Clasificación: "Local" | "Visita" | "Femenino".
  *  - color:         string       Combinación principal de colores.
  *  - precio:        int          Valor base en pesos chilenos (CLP).
- *  - precio_oferta: int|null     Precio de oferta en CLP (null = sin oferta).
  *  - detalles:      string|null  Texto adicional o descripción técnica.
  *  - sku:           string       Código de producto único (UNIQUE).
  *  - created_at:    string       Fecha/hora de creación.
@@ -32,7 +31,7 @@ final class Camiseta
      */
     public static function all(): array
     {
-        $sql  = 'SELECT id, titulo, club, pais, tipo, color, precio, precio_oferta, detalles, sku, created_at, updated_at
+        $sql  = 'SELECT id, titulo, club, pais, tipo, color, precio, detalles, sku, created_at, updated_at
                  FROM camisetas ORDER BY id';
         $stmt = Database::connection()->query($sql);
 
@@ -48,7 +47,7 @@ final class Camiseta
     public static function find(int $id): ?array
     {
         $stmt = Database::connection()->prepare(
-            'SELECT id, titulo, club, pais, tipo, color, precio, precio_oferta, detalles, sku, created_at, updated_at
+            'SELECT id, titulo, club, pais, tipo, color, precio, detalles, sku, created_at, updated_at
              FROM camisetas WHERE id = :id LIMIT 1'
         );
         $stmt->execute([':id' => $id]);
@@ -66,7 +65,7 @@ final class Camiseta
     public static function findBySku(string $sku): ?array
     {
         $stmt = Database::connection()->prepare(
-            'SELECT id, titulo, club, pais, tipo, color, precio, precio_oferta, detalles, sku, created_at, updated_at
+            'SELECT id, titulo, club, pais, tipo, color, precio, detalles, sku, created_at, updated_at
              FROM camisetas WHERE sku = :sku LIMIT 1'
         );
         $stmt->execute([':sku' => $sku]);
@@ -109,8 +108,8 @@ final class Camiseta
     {
         $pdo  = Database::connection();
         $stmt = $pdo->prepare(
-            'INSERT INTO camisetas (titulo, club, pais, tipo, color, precio, precio_oferta, detalles, sku)
-             VALUES (:titulo, :club, :pais, :tipo, :color, :precio, :precio_oferta, :detalles, :sku)'
+            'INSERT INTO camisetas (titulo, club, pais, tipo, color, precio, detalles, sku)
+             VALUES (:titulo, :club, :pais, :tipo, :color, :precio, :detalles, :sku)'
         );
 
         try {
@@ -121,7 +120,6 @@ final class Camiseta
                 ':tipo'          => $data['tipo'],
                 ':color'         => $data['color'],
                 ':precio'        => $data['precio'],
-                ':precio_oferta' => $data['precio_oferta'],
                 ':detalles'      => $data['detalles'],
                 ':sku'           => $data['sku'],
             ]);
@@ -149,7 +147,7 @@ final class Camiseta
         $stmt = Database::connection()->prepare(
             'UPDATE camisetas
              SET titulo = :titulo, club = :club, pais = :pais, tipo = :tipo, color = :color,
-                 precio = :precio, precio_oferta = :precio_oferta, detalles = :detalles, sku = :sku
+                 precio = :precio, detalles = :detalles, sku = :sku
              WHERE id = :id'
         );
 
@@ -161,7 +159,6 @@ final class Camiseta
                 ':tipo'          => $data['tipo'],
                 ':color'         => $data['color'],
                 ':precio'        => $data['precio'],
-                ':precio_oferta' => $data['precio_oferta'],
                 ':detalles'      => $data['detalles'],
                 ':sku'           => $data['sku'],
                 ':id'            => $id,

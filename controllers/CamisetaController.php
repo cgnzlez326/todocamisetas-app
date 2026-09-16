@@ -201,7 +201,6 @@ final class CamisetaController
             'tipo'          => (string) $request->input('tipo', ''),
             'color'         => trim((string) $request->input('color', '')),
             'precio'        => $request->input('precio'),
-            'precio_oferta' => $request->input('precio_oferta'),
             'detalles'      => $request->input('detalles'),
             'sku'           => trim((string) $request->input('sku', '')),
             'tallas'        => $request->input('tallas', []),
@@ -225,7 +224,6 @@ final class CamisetaController
             ->required('sku', 'sku')
             ->in('tipo', self::TIPOS, 'tipo')
             ->integer('precio', 1, 'precio')
-            ->integer('precio_oferta', 1, 'precio_oferta')
             ->arrayOfIds('tallas', 'tallas');
 
         if (!array_key_exists('precio', $data) || $data['precio'] === null || $data['precio'] === '') {

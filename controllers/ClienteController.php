@@ -181,13 +181,13 @@ final class ClienteController
         }
 
         Response::success([
-            'cliente_id'   => (int) $cliente['id'],
-            'camiseta_id'  => (int) $camiseta['id'],
-            'sku'          => $camiseta['sku'],
-            'categoria'    => $cliente['categoria'],
-            'precio'       => (int) $camiseta['precio'],
-            'precio_oferta' => $camiseta['precio_oferta'] === null ? null : (int) $camiseta['precio_oferta'],
-            'precio_final' => PrecioService::calcular($camiseta, $cliente),
+            'cliente_id'        => (int) $cliente['id'],
+            'camiseta_id'       => (int) $camiseta['id'],
+            'sku'               => $camiseta['sku'],
+            'categoria'         => $cliente['categoria'],
+            'precio'            => (int) $camiseta['precio'],
+            'porcentaje_oferta' => (float) $cliente['porcentaje_oferta'],
+            'precio_final'      => PrecioService::calcular($camiseta, $cliente),
         ]);
     }
 

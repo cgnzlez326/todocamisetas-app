@@ -38,7 +38,6 @@ CREATE TABLE camisetas (
     tipo          ENUM('Local','Visita','Femenino') NOT NULL,
     color         VARCHAR(80)  NOT NULL,
     precio        INT UNSIGNED NOT NULL,
-    precio_oferta INT UNSIGNED NULL,
     detalles      TEXT         NULL,
     sku           VARCHAR(50)  NOT NULL,
     created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -51,7 +51,7 @@ curl http://localhost/todocamisetas/api/camisetas
 # Crear camiseta
 curl -X POST http://localhost/todocamisetas/api/camisetas \
   -H "Content-Type: application/json" \
-  -d '{"titulo":"Camiseta Local 2025","club":"Colo-Colo","pais":"Chile","tipo":"Local","color":"Blanco y Negro","precio":42000,"precio_oferta":37000,"sku":"CL-COL-LOC-2025","tallas":[3,4,5]}'
+  -d '{"titulo":"Camiseta Local 2025","club":"Colo-Colo","pais":"Chile","tipo":"Local","color":"Blanco y Negro","precio":42000,"sku":"CL-COL-LOC-2025","tallas":[3,4,5]}'
 
 # Precio final de la camiseta 1 para el cliente preferencial 1
 curl http://localhost/todocamisetas/api/clientes/1/camisetas/1/precio

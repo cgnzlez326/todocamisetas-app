@@ -112,7 +112,7 @@ tallas (id, nombre[unique])
 camiseta_talla (camiseta_id FK, talla_id FK)   PK compuesta
    | N..1
 camisetas (id, titulo, club, pais, tipo, color,
-           precio, precio_oferta, detalles, sku[unique],
+           precio, detalles, sku[unique],
            created_at, updated_at)
    | 1..N
 cliente_camiseta (cliente_id FK, camiseta_id FK, cantidad)   PK compuesta
@@ -131,13 +131,13 @@ clientes (id, nombre_comercial, rut[unique], ciudad, region,
   `ON DELETE RESTRICT`, reforzada además en la capa de negocio (HTTP 409).
 - **`sku`** y **`rut`** tienen índice `UNIQUE` para garantizar unicidad a nivel
   de base de datos, con validación previa en los modelos.
-- `precio` y `precio_oferta` se almacenan como enteros (CLP, sin decimales).
-  `precio_oferta` admite `NULL` para indicar "sin oferta".
+- `precio` se almacena como entero (CLP, sin decimales). El descuento vive en el
+  cliente (`porcentaje_oferta`, `DECIMAL(5,2)`), no en la camiseta.
 
 ## Reglas de negocio
 
 1. **Precio final dinámico** (`services/PrecioService.php`):
-   - Cliente `Preferencial`: `precio_final = precio_oferta` si está definido; si no, `precio`.
+   - Cliente `Preferencial`: `precio_final = precio - precio * porcentaje_oferta / 100` (redondeado al CLP); si el porcentaje es 0, `precio`.
    - Cliente `Regular`: `precio_final = precio`.
 2. **No eliminar** un cliente con camisetas asociadas → `409 Conflict`.
 3. Relación camiseta ↔ talla **muchos-a-muchos** (`camiseta_talla`).

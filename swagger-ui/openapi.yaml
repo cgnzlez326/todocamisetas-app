@@ -8,7 +8,7 @@ info:
     camisetas a clientes y el calculo dinamico del precio final.
 
     **Reglas de negocio**
-    - Cliente `Preferencial`: `precio_final` = `precio_oferta` si esta definido; en caso contrario `precio`.
+    - Cliente `Preferencial`: `precio_final` = `precio` menos su `porcentaje_oferta` (redondeado al CLP); si el porcentaje es 0, `precio`.
     - Cliente `Regular`: `precio_final` = `precio`.
     - No se elimina un cliente que tenga camisetas asociadas (HTTP 409).
     - El `sku` de una camiseta es unico.
@@ -56,7 +56,6 @@ paths:
               tipo: Local
               color: Rojo
               precio: 45000
-              precio_oferta: 39000
               detalles: Tela Dry-Fit
               sku: CL-SEL-LOC-2025
               tallas: [2, 3, 4]
@@ -350,7 +349,6 @@ components:
         tipo: { type: string, enum: [Local, Visita, Femenino] }
         color: { type: string, example: Blanco y Negro }
         precio: { type: integer, example: 42000 }
-        precio_oferta: { type: integer, nullable: true, example: 37000 }
         detalles: { type: string, nullable: true }
         sku: { type: string, example: CL-COL-LOC-2025 }
         tallas:
@@ -403,5 +401,5 @@ components:
         sku: { type: string }
         categoria: { type: string, enum: [Regular, Preferencial] }
         precio: { type: integer }
-        precio_oferta: { type: integer, nullable: true }
+        porcentaje_oferta: { type: number, example: 10 }
         precio_final: { type: integer }

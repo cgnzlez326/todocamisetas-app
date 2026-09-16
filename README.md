@@ -56,8 +56,8 @@ Códigos: `200`, `201`, `400` (validación), `404`, `405`, `409` (conflicto), `5
 
 ## Reglas de negocio
 
-1. **Precio final dinámico:** cliente `Preferencial` usa `precio_oferta` si está
-   definido (si no, `precio`); cliente `Regular` siempre usa `precio`.
+1. **Precio final dinámico:** cliente `Preferencial` aplica su `porcentaje_oferta`
+   sobre el `precio` (si es 0, usa el precio base); cliente `Regular` siempre usa `precio`.
 2. **No eliminar** un cliente con camisetas asociadas (`409`).
 3. Relación **camiseta ↔ talla muchos-a-muchos** (`camiseta_talla`).
 4. **SKU único** y **RUT único**, validados antes de persistir (`409`).

@@ -75,7 +75,7 @@
               "code": 200,
               "_postman_previewlanguage": "json",
               "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
-              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"titulo\": \"Camiseta Local 2025 Seleccion Chilena\",\n      \"club\": \"Seleccion Chilena\",\n      \"pais\": \"Chile\",\n      \"tipo\": \"Local\",\n      \"color\": \"Rojo\",\n      \"precio\": 45000,\n      \"precio_oferta\": 39000,\n      \"detalles\": \"Tela Dry-Fit, corte regular.\",\n      \"sku\": \"CL-SEL-LOC-2025\",\n      \"tallas\": [{ \"id\": 2, \"nombre\": \"S\" }, { \"id\": 3, \"nombre\": \"M\" }]\n    }\n  ],\n  \"meta\": { \"total\": 1 }\n}"
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"titulo\": \"Camiseta Local 2025 Seleccion Chilena\",\n      \"club\": \"Seleccion Chilena\",\n      \"pais\": \"Chile\",\n      \"tipo\": \"Local\",\n      \"color\": \"Rojo\",\n      \"precio\": 45000,\n      \"detalles\": \"Tela Dry-Fit, corte regular.\",\n      \"sku\": \"CL-SEL-LOC-2025\",\n      \"tallas\": [{ \"id\": 2, \"nombre\": \"S\" }, { \"id\": 3, \"nombre\": \"M\" }]\n    }\n  ],\n  \"meta\": { \"total\": 1 }\n}"
             }
           ]
         },
@@ -121,7 +121,7 @@
               "code": 200,
               "_postman_previewlanguage": "json",
               "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
-              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"titulo\": \"Camiseta Local 2025 Seleccion Chilena\",\n    \"sku\": \"CL-SEL-LOC-2025\",\n    \"precio\": 45000,\n    \"precio_oferta\": 39000,\n    \"tallas\": [{ \"id\": 2, \"nombre\": \"S\" }, { \"id\": 3, \"nombre\": \"M\" }]\n  }\n}"
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"titulo\": \"Camiseta Local 2025 Seleccion Chilena\",\n    \"sku\": \"CL-SEL-LOC-2025\",\n    \"precio\": 45000,\n    \"tallas\": [{ \"id\": 2, \"nombre\": \"S\" }, { \"id\": 3, \"nombre\": \"M\" }]\n  }\n}"
             },
             {
               "name": "404 No encontrada",
@@ -140,7 +140,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"titulo\": \"Camiseta Local 2025 Colo-Colo\",\n  \"club\": \"Colo-Colo\",\n  \"pais\": \"Chile\",\n  \"tipo\": \"Local\",\n  \"color\": \"Blanco y Negro\",\n  \"precio\": 42000,\n  \"precio_oferta\": 37000,\n  \"detalles\": \"Edicion centenario.\",\n  \"sku\": \"CL-COL-LOC-2025\",\n  \"tallas\": [3, 4, 5]\n}",
+              "raw": "{\n  \"titulo\": \"Camiseta Local 2025 Colo-Colo\",\n  \"club\": \"Colo-Colo\",\n  \"pais\": \"Chile\",\n  \"tipo\": \"Local\",\n  \"color\": \"Blanco y Negro\",\n  \"precio\": 42000,\n  \"detalles\": \"Edicion centenario.\",\n  \"sku\": \"CL-COL-LOC-2025\",\n  \"tallas\": [3, 4, 5]\n}",
               "options": { "raw": { "language": "json" } }
             },
             "url": { "raw": "{{base_url}}/api/camisetas", "host": ["{{base_url}}"], "path": ["api", "camisetas"] },
@@ -180,7 +180,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"titulo\": \"Camiseta Local 2025 Colo-Colo (edicion)\",\n  \"club\": \"Colo-Colo\",\n  \"pais\": \"Chile\",\n  \"tipo\": \"Local\",\n  \"color\": \"Blanco y Negro\",\n  \"precio\": 43000,\n  \"precio_oferta\": 38000,\n  \"detalles\": \"Temporada 2025.\",\n  \"sku\": \"CL-COL-LOC-2025\",\n  \"tallas\": [3, 4, 5, 6]\n}",
+              "raw": "{\n  \"titulo\": \"Camiseta Local 2025 Colo-Colo (edicion)\",\n  \"club\": \"Colo-Colo\",\n  \"pais\": \"Chile\",\n  \"tipo\": \"Local\",\n  \"color\": \"Blanco y Negro\",\n  \"precio\": 43000,\n  \"detalles\": \"Temporada 2025.\",\n  \"sku\": \"CL-COL-LOC-2025\",\n  \"tallas\": [3, 4, 5, 6]\n}",
               "options": { "raw": { "language": "json" } }
             },
             "url": {
@@ -358,7 +358,7 @@
               "host": ["{{base_url}}"],
               "path": ["api", "clientes", "{{cliente_id}}", "camisetas"]
             },
-            "description": "GET /api/clientes/{id}/camisetas. Preferencial usa precio_oferta; Regular usa precio."
+            "description": "GET /api/clientes/{id}/camisetas. Preferencial aplica su porcentaje_oferta sobre precio; Regular usa precio."
           },
           "response": [
             {
@@ -367,7 +367,7 @@
               "code": 200,
               "_postman_previewlanguage": "json",
               "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
-              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"sku\": \"CL-SEL-LOC-2025\",\n      \"precio\": 45000,\n      \"precio_oferta\": 39000,\n      \"cantidad\": 20,\n      \"precio_final\": 39000\n    }\n  ],\n  \"meta\": { \"total\": 1 }\n}"
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"sku\": \"CL-SEL-LOC-2025\",\n      \"precio\": 45000,\n      \"cantidad\": 20,\n      \"precio_final\": 40500\n    }\n  ],\n  \"meta\": { \"total\": 1 }\n}"
             }
           ]
         },
@@ -390,7 +390,7 @@
               "code": 200,
               "_postman_previewlanguage": "json",
               "header": [{ "key": "Content-Type", "value": "application/json; charset=utf-8" }],
-              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"cliente_id\": 1,\n    \"camiseta_id\": 1,\n    \"sku\": \"CL-SEL-LOC-2025\",\n    \"categoria\": \"Preferencial\",\n    \"precio\": 45000,\n    \"precio_oferta\": 39000,\n    \"precio_final\": 39000\n  }\n}"
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"cliente_id\": 1,\n    \"camiseta_id\": 1,\n    \"sku\": \"CL-SEL-LOC-2025\",\n    \"categoria\": \"Preferencial\",\n    \"precio\": 45000,\n    \"porcentaje_oferta\": 10,\n    \"precio_final\": 40500\n  }\n}"
             }
           ]
         }

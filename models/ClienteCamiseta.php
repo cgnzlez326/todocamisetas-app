@@ -77,7 +77,7 @@ final class ClienteCamiseta
     public static function camisetasDe(int $clienteId): array
     {
         $sql = 'SELECT c.id, c.titulo, c.club, c.pais, c.tipo, c.color,
-                       c.precio, c.precio_oferta, c.detalles, c.sku, cc.cantidad
+                       c.precio, c.detalles, c.sku, cc.cantidad
                 FROM camisetas c
                 INNER JOIN cliente_camiseta cc ON cc.camiseta_id = c.id
                 WHERE cc.cliente_id = :id

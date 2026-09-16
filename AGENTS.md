@@ -22,9 +22,10 @@ sistema de gestión de inventario y relación con clientes.
 
 ### Reglas de negocio (obligatorias)
 1. **Precio final dinámico** según el cliente:
-   - Cliente **Preferencial**: si la camiseta tiene `precio_oferta` definido, `precio_final`
-     debe ser ese valor; en caso contrario, el precio base.
+   - Cliente **Preferencial**: `precio_final` = precio base menos su `porcentaje_oferta`
+     (redondeado al CLP). Si el porcentaje es 0, se usa el precio base.
    - Cliente **Regular**: `precio_final` siempre es el `precio` base.
+   - El descuento vive en el cliente (`porcentaje_oferta`); la camiseta solo tiene `precio`.
 2. **No eliminar** un cliente que tenga camisetas asociadas (rechazar con error claro).
 3. La relación **camiseta ↔ talla** es **muchos a muchos**.
 4. El **SKU** es único; validar antes de persistir.

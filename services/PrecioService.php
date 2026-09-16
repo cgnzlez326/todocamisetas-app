@@ -5,8 +5,8 @@ declare(strict_types=1);
 /**
  * Regla de negocio del precio final dinamico segun la categoria del cliente.
  *
- * - Cliente Preferencial: si la camiseta tiene precio_oferta definido, se usa
- *   ese valor; en caso contrario, el precio base.
+ * - Cliente Preferencial: se aplica su `porcentaje_oferta` sobre el precio base
+ *   (redondeado al CLP). Si el porcentaje es 0, se usa el precio base.
  * - Cliente Regular: siempre el precio base.
  */
 final class PrecioService
@@ -14,8 +14,8 @@ final class PrecioService
     /**
      * Calcula el precio final de una camiseta para un cliente.
      *
-     * @param array $camiseta Fila de camiseta (incluye precio y precio_oferta).
-     * @param array $cliente  Fila de cliente (incluye categoria).
+     * @param array $camiseta Fila de camiseta (incluye precio).
+     * @param array $cliente  Fila de cliente (incluye categoria y porcentaje_oferta).
      * @return int Precio final en CLP.
      */
     public static function calcular(array $camiseta, array $cliente): int
@@ -26,13 +26,13 @@ final class PrecioService
             return $precioBase;
         }
 
-        $oferta = $camiseta['precio_oferta'] ?? null;
+        $porcentaje = (float) ($cliente['porcentaje_oferta'] ?? 0);
 
-        if ($oferta === null || $oferta === '' || (int) $oferta <= 0) {
+        if ($porcentaje <= 0) {
             return $precioBase;
         }
 
-        return (int) $oferta;
+        return (int) round($precioBase * (1 - $porcentaje / 100));
     }
 
     /**
